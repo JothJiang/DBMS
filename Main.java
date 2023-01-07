@@ -18,8 +18,14 @@ public class Main {
             System.out.println("4.退出系统");
             System.out.println("请选择：(输入序号数字)");
             Scanner sc = new Scanner(System.in);
-            int ch0 = sc.nextInt();
-            System.out.println("请输入您的账号（学号/工号）：");
+            int ch0 = 4;
+            try {
+                ch0 = sc.nextInt();
+            }catch (Exception e) {
+                System.out.println("请输入正确的数字序号！");
+            }
+            if (ch0 == 4) break;
+            System.out.println("请输入您的账号（学号/工号）：1");
             String no = sc.next();
             System.out.println("请输入您的密码：");
             String pwd = sc.next();
@@ -33,7 +39,12 @@ public class Main {
                         System.out.println("2.查看我的学术交流活动");
                         System.out.println("3.返回上一级");
                         System.out.println("请选择：(输入序号数字)");
-                        int ch1 = sc.nextInt();
+                        int ch1 = 3;
+                        try {
+                            ch1 = sc.nextInt();
+                        }catch (Exception e) {
+                            System.out.println("请输入正确的数字序号！");
+                        }
                         if(ch1 == 1){
                             Activity activity = new Activity();
                             activity.setGid(no); //自动填充该生的学号
@@ -85,7 +96,12 @@ public class Main {
                         System.out.println("2.审核学生学术交流活动");
                         System.out.println("3.返回上一级");
                         System.out.println("请选择：(输入序号数字)");
-                        int ch1 = sc.nextInt();
+                        int ch1 = 3;
+                        try {
+                            ch1 = sc.nextInt();
+                        }catch (Exception e) {
+                            System.out.println("请输入正确的数字序号！");
+                        }
                         if(ch1 == 1){
                             System.out.println("请输入学生学号：");
                             String sno = sc.next();
@@ -101,7 +117,8 @@ public class Main {
                         else System.out.println("请输入正确的数字序号！");
                     }
                 }else System.out.println("账号或密码错误，登录失败！");
-            } else if (ch0 == 3) {
+            }
+            else if (ch0 == 3) {
                 String depart = DAOFactory.getInstance().getManagerDao().checkMnoAndPwd(no, pwd);
                 if (depart != null){
                     System.out.println("\n\n"+depart+"学科负责人您好，您已成功登录系统");
@@ -111,9 +128,26 @@ public class Main {
                         System.out.println("2.审核学生学术交流活动");
                         System.out.println("3.返回上一级");
                         System.out.println("请选择：(输入序号数字)");
-                        int ch1 = sc.nextInt();
+                        int ch1 = 3;
+                        try {
+                            ch1 = sc.nextInt();
+                        }catch (Exception e) {
+                            System.out.println("请输入正确的数字序号！");
+                        }
                         if(ch1 == 1){
-                            DAOFactory.getInstance().getActivityDAO().queryActivityByDepart(depart);
+                            List<Activity> activities = DAOFactory.getInstance().getActivityDAO().queryActivityByDepart(depart);
+                            System.out.println("活动id | 活动地点 | 活动名称 | 活动时间 | 报告中英文名称 | 参会证明图片地址 | 备注 | 审核状态");
+                            for(Activity activity:activities){
+                                System.out.println(activity.getId()+" | "+
+                                        activity.getName()+" | "+
+                                        activity.getAddr()+" | "+
+                                        activity.getDate()+" | "+
+                                        activity.getReport()+" | "+
+                                        activity.getPicture()+" | "+
+                                        activity.getNote()+" | "+
+                                        activity.getState()
+                                );
+                            }
                         }
                         else if (ch1 == 2) {
                             System.out.println("请输入审核通过的活动id：");
@@ -125,7 +159,7 @@ public class Main {
                         else System.out.println("请输入正确的数字序号！");
                     }
                 }else System.out.println("账号或密码错误，登录失败！");
-            } else if (ch0 == 4) break;
+            }
             else System.out.println("请输入正确的数字序号！");
         }
     }
