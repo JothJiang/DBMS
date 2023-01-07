@@ -110,7 +110,7 @@ public class ActivityDaoImpl extends DAOBase implements ActivityDAO {
         List<Activity> activities = new ArrayList<>();
         try{
             con = getConnection();
-            String ACTIVITY_SELECT_SQL2 = "SELECT * FROM dbo.activity JOIN dbo.student ON grad_id=id WHERE sdepart=? and state='导师审核通过'";
+            String ACTIVITY_SELECT_SQL2 = "SELECT * FROM dbo.activity JOIN dbo.student ON grad_id COLLATE Chinese_PRC_CI_AS = sno COLLATE Chinese_PRC_CI_AS WHERE sdepart COLLATE Chinese_PRC_CI_AS = ? and state COLLATE Chinese_PRC_CI_AS = '导师审核通过' COLLATE Chinese_PRC_CI_AS";
             PreparedStatement pst = con.prepareStatement(ACTIVITY_SELECT_SQL2);
             pst.setString(1, depart);
             rs = pst.executeQuery();
